@@ -661,6 +661,9 @@ h2{font-size:clamp(2rem,5vw,3.4rem);line-height:1.04}
 .hours td{white-space:normal}
 .facts .wrap{align-items:stretch}
 .facts div{display:flex;flex-direction:column;justify-content:flex-start}
+
+/* design rules: no italic accent words in headings */
+:is(h1,h2,h3) em{font-style:normal!important;font-weight:inherit!important}
 </style>
 </head>
 <body>
@@ -1144,10 +1147,9 @@ views.home=function(){
   var arrow='<span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 12h16M13 5l7 7-7 7"/></svg></span>';
   var mq=CATS.map(function(c){return "<span>"+esc(c.name)+"</span>";}).join("");
   return '<section class="hero2"><div class="wrap"><div>'+
-    '<p class="kick"><i aria-hidden="true"></i>'+esc(today||"Levittown, New York")+'</p>'+
     '<h1 data-split>Bring everyone <em>to the table.</em></h1>'+
     '<p class="sub rv" style="--d:4">Pizza, pasta and family recipes, on Hempstead Turnpike.</p>'+
-    '<div class="btn-row rv" style="--d:5"><a class="btn" href="#/order">Order Online</a><a class="btn ghost" href="#/catering">Catering</a></div></div>'+
+    '<div class="btn-row rv" style="--d:5"><a class="btn" href="#/order">Order Online</a><a class="btn ghost" href="#/catering">Catering</a></div><p class="kick" style="margin:1.4rem 0 0"><i aria-hidden="true"></i>'+esc(today||"Levittown, New York")+'</p></div>'+
     '<div class="prints"><figure class="p1"><img src="'+IMG.counter+'" alt="The pizza counter at Pat\'s with fresh pies on display"><figcaption>The counter</figcaption></figure>'+
     '<figure class="p2"><img src="'+IMG.dining+'" alt="The dining room at Pat\'s"><figcaption>The dining room</figcaption></figure>'+
     '<figure class="p3"><img src="'+IMG.storefront+'" alt="The front entrance of Pat\'s"><figcaption>Nassau Mall</figcaption></figure></div>'+
@@ -1183,7 +1185,7 @@ views.home=function(){
 };
 
 views.menu=function(){
-  var h='<section class="pagehero"><div class="wrap"><p class="eyebrow">The menu</p><h1>Come hungry.</h1><p class="lede">Every dish from Pat\'s printed menu (April 2026) and its online ordering menu, as readable text. Prices are subject to change.</p><div class="btn-row"><a class="btn" href="#/order">Order Online</a><a class="btn ghost" href="'+BIZ.sourceMenu+'" target="_blank" rel="noopener">View the original menu</a></div></div></section>'+
+  var h='<section class="pagehero"><div class="wrap"><h1>Come hungry.</h1><p class="lede">Every dish from Pat\'s printed menu (April 2026) and its online ordering menu, as readable text. Prices are subject to change.</p><div class="btn-row"><a class="btn" href="#/order">Order Online</a><a class="btn ghost" href="'+BIZ.sourceMenu+'" target="_blank" rel="noopener">View the original menu</a></div></div></section>'+
     '<div class="catnav"><div class="wrap"><div class="chips" role="navigation" aria-label="Menu categories">'+CATS.map(function(c){return '<button type="button" class="chip" data-jump="m-'+c.id+'">'+c.name+'</button>';}).join("")+'</div></div></div><div class="wrap">';
   CATS.forEach(function(c){
     var its=ITEMS.filter(function(i){return i.cat===c.id;}),subs=[];
@@ -1198,7 +1200,7 @@ views.menu=function(){
 
 var filt={q:"",cat:"all"};
 views.order=function(){
-  return '<section class="pagehero"><div class="wrap"><p class="eyebrow">Order online</p><h1>What can we make you?</h1><p class="lede">Build your order, choose your options and review it. This is a working demonstration of the ordering experience.</p></div></section>'+
+  return '<section class="pagehero"><div class="wrap"><h1>What can we make you?</h1><p class="lede">Build your order, choose your options and review it. This is a working demonstration of the ordering experience.</p></div></section>'+
     '<section class="sec" style="padding-top:2rem"><div class="wrap"><p class="demo-banner"><b>Demo storefront.</b> No payment will be collected and no order will be sent to Pat\'s. Prices are from the published menu and need owner confirmation.</p>'+
     '<div class="order-layout"><div><div class="search"><label class="sr-only" for="q">Search the menu</label><input id="q" type="search" placeholder="Search dishes, like vodka or shrimp" value="'+esc(filt.q)+'" autocomplete="off"></div>'+
     '<div class="chips" role="group" aria-label="Filter by category">'+[["all","All"]].concat(CATS.map(function(c){return [c.id,c.name];})).concat([["catering","Catering"]]).map(function(c){return '<button type="button" class="chip" data-cat="'+c[0]+'" aria-pressed="'+(filt.cat===c[0])+'">'+c[1]+'</button>';}).join("")+'</div>'+
@@ -1218,7 +1220,7 @@ function renderProducts(){
 }
 
 views.catering=function(){
-  var h='<section class="pagehero"><div class="wrap"><p class="eyebrow">Catering</p><h1>Make room for <em>good company.</em></h1><p class="lede">Party packages for 10 to 40 guests, and half or full trays for any size gathering. Pat\'s publishes free delivery and set up on all catering orders, and free garlic knots with every one.</p>'+
+  var h='<section class="pagehero"><div class="wrap"><h1>Make room for <em>good company.</em></h1><p class="lede">Party packages for 10 to 40 guests, and half or full trays for any size gathering. Pat\'s publishes free delivery and set up on all catering orders, and free garlic knots with every one.</p>'+
     '<div class="btn-row"><button type="button" class="btn" data-jump="packages">View Packages</button><button type="button" class="btn ghost" data-jump="inquire">Ask About Catering</button></div></div></section>'+
     '<section class="sec" id="packages" tabindex="-1"><div class="wrap"><div class="head"><p class="eyebrow">Party packages</p><h2>Three ways to feed a crowd.</h2><p class="lede">Each package is one price for the whole spread. You choose the pasta, the chicken and the salad.</p><p class="note" style="margin-top:.6rem"><span class="flag">Confirm with Pat\'s</span> These packages were published in June 2026 as a graduation offer. Check that they are still available at these prices.</p></div>'+
     '<div class="grid g3">'+PACKAGES.map(function(p){return '<div class="card pkg"><span class="feeds">'+p.feeds+'</span><h3>'+p.name+'</h3><p class="price">'+money(p.price)+' <small>per package</small></p><ul>'+p.includes.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+'</ul><button type="button" class="btn" data-item="'+p.id+'">Choose trays &amp; add</button><button type="button" class="link linkbtn" data-ask="'+p.name+'">Ask about this package</button></div>';}).join("")+'</div>'+
@@ -1266,7 +1268,7 @@ views.catering=function(){
 };
 
 views.story=function(){
-  return '<section class="pagehero"><div class="wrap"><p class="eyebrow">Our story</p><h1>A family table <em>since 1953.</em></h1><p class="lede">The recipes are older than the restaurant. The family has been cooking them for generations.</p></div></section>'+
+  return '<section class="pagehero"><div class="wrap"><h1>A family table <em>since 1953.</em></h1><p class="lede">The recipes are older than the restaurant. The family has been cooking them for generations.</p></div></section>'+
     '<section class="sec"><div class="wrap"><div class="split" style="align-items:start"><div><h2>It started in Queens.</h2><p class="lede">Pat\'s Pizzeria &amp; Restaurant was established in 1953 as one of Queens\' original Italian eateries.</p>'+
     '<div class="timeline"><div><b>1953</b>Pat\'s is established in Queens.</div><div><b>1971</b>Santino and Vincenzo D\'Angelo, a father-and-son team, start the family business to share the authentic Italian food they grew up with, based on family recipes passed down for generations.</div><div><b>Today</b>Santo and his brother Salvatore bring their recipes and their passion for food to their restaurant on Long Island, on Hempstead Turnpike in Levittown.</div></div></div>'+
     '<div>'+photo("dining","The dining room at Pat's in Levittown","The dining room in Levittown. Photo from Pat's current website.")+'</div></div></div></section>'+
@@ -1275,7 +1277,7 @@ views.story=function(){
 };
 
 views.contact=function(){
-  return '<section class="pagehero"><div class="wrap"><p class="eyebrow">Contact</p><h1>Find us, call us, come by.</h1></div></section>'+
+  return '<section class="pagehero"><div class="wrap"><h1>Find us, call us, come by.</h1></div></section>'+
     '<section class="sec"><div class="wrap"><div class="split" style="align-items:start"><div><h2>'+BIZ.name+'</h2><p class="contact-big" style="margin-top:1rem">'+BIZ.street+'<br>'+BIZ.city+'</p><p class="note">'+BIZ.where+'</p>'+
     '<dl class="review"><dt>Restaurant</dt><dd>'+BIZ.phones.map(function(p){return '<a class="link" href="tel:+1'+p.replace(/\D/g,"")+'">'+p+'</a>';}).join("")+'</dd>'+
     '<dt>Catering line</dt><dd><a class="link" href="tel:'+BIZ.cateringTel+'">'+BIZ.cateringPhone+'</a></dd>'+
@@ -1289,7 +1291,7 @@ views.contact=function(){
 /* ---------------- demo checkout (nothing here is stored or sent) ---------------- */
 var co={step:1,ful:"",date:"",f:{},done:null};
 function tomorrowNY(){try{var d=new Date(Date.now()+864e5);return new Intl.DateTimeFormat("en-CA",{timeZone:"America/New_York"}).format(d);}catch(e){return "";}}
-views.checkout=function(){return '<section class="pagehero"><div class="wrap"><p class="eyebrow">Demo checkout</p><h1>Review your order.</h1></div></section><section class="sec" style="padding-top:2rem"><div class="wrap" id="coBox"></div></section>';};
+views.checkout=function(){return '<section class="pagehero"><div class="wrap"><h1>Review your order.</h1></div></section><section class="sec" style="padding-top:2rem"><div class="wrap" id="coBox"></div></section>';};
 function orderSummaryHTML(lines){
   return lines.map(function(l){var it=BY[l.id],u=unitPrice(it,l.sel);return '<div class="cline"><div class="top"><span class="nm">'+l.qty+' × '+esc(it.name)+'</span><span class="lt">'+money(u*l.qty)+'</span></div><ul>'+describe(it,l.sel).map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+(l.note?'<li><em>Note: '+esc(l.note)+'</em></li>':"")+'</ul></div>';}).join("");
 }
